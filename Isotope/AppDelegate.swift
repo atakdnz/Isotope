@@ -252,7 +252,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         ]
         
         if compact {
-            attributes[.baselineOffset] = -3
+            attributes[.baselineOffset] = -5
         }
         
         return NSAttributedString(string: text, attributes: attributes)
@@ -277,7 +277,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         ]
         
         if compact {
-            attributes[.baselineOffset] = -3
+            attributes[.baselineOffset] = -5
         }
         
         let attributedString = NSMutableAttributedString(string: text, attributes: attributes)
