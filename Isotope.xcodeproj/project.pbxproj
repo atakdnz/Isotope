@@ -13,6 +13,7 @@
 		E91234560005 /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91234550007 /* ColorTheme.swift */; };
 		E91234560006 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91234550008 /* Settings.swift */; };
 		E91234560007 /* TimerEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91234550009 /* TimerEngine.swift */; };
+		E91234560008 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9123455000A /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		E91234550007 /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
 		E91234550008 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		E91234550009 /* TimerEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEngine.swift; sourceTree = "<group>"; };
+		E9123455000A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 				E91234550007 /* ColorTheme.swift */,
 				E91234550008 /* Settings.swift */,
 				E91234550005 /* main.swift */,
+				E9123455000A /* Assets.xcassets */,
 				E91234550003 /* Info.plist */,
 			);
 			path = Isotope;
@@ -75,6 +78,7 @@
 			buildConfigurationList = E912345A0001 /* Build configuration list for PBXNativeTarget "Isotope" */;
 			buildPhases = (
 				E912345B0001 /* Sources */,
+				E912345B0002 /* Resources */,
 				E91234570001 /* Frameworks */,
 			);
 			buildRules = (
@@ -133,6 +137,17 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXResourcesBuildPhase section */
+	E912345B0002 /* Resources */ = {
+		isa = PBXResourcesBuildPhase;
+		buildActionMask = 2147483647;
+		files = (
+			E91234560008 /* Assets.xcassets in Resources */,
+		);
+		runOnlyForDeploymentPostprocessing = 0;
+	};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
 		E912345E0001 /* Debug */ = {
