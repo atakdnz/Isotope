@@ -88,6 +88,56 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         menu.addItem(NSMenuItem.separator())
         
+        // Pomodoro Settings submenu
+        let pomodoroMenu = NSMenu()
+        
+        // Work duration options
+        let workDurationMenu = NSMenu()
+        for mins in [15, 20, 25, 30, 45, 50, 60] {
+            let item = NSMenuItem(title: "\(mins) min", action: #selector(setWorkDuration(_:)), keyEquivalent: "")
+            item.representedObject = mins
+            item.state = settings.pomodoroWorkDuration == mins ? .on : .off
+            workDurationMenu.addItem(item)
+        }
+        let workMenuItem = NSMenuItem(title: "Work Duration", action: nil, keyEquivalent: "")
+        workMenuItem.submenu = workDurationMenu
+        pomodoroMenu.addItem(workMenuItem)
+        
+        // Short break options
+        let shortBreakMenu = NSMenu()
+        for mins in [3, 5, 10, 15] {
+            let item = NSMenuItem(title: "\(mins) min", action: #selector(setShortBreak(_:)), keyEquivalent: "")
+            item.representedObject = mins
+            item.state = settings.pomodoroShortBreak == mins ? .on : .off
+            shortBreakMenu.addItem(item)
+        }
+        let shortBreakMenuItem = NSMenuItem(title: "Short Break", action: nil, keyEquivalent: "")
+        shortBreakMenuItem.submenu = shortBreakMenu
+        pomodoroMenu.addItem(shortBreakMenuItem)
+        
+        // Long break options
+        let longBreakMenu = NSMenu()
+        for mins in [10, 15, 20, 30] {
+            let item = NSMenuItem(title: "\(mins) min", action: #selector(setLongBreak(_:)), keyEquivalent: "")
+            item.representedObject = mins
+            item.state = settings.pomodoroLongBreak == mins ? .on : .off
+            longBreakMenu.addItem(item)
+        }
+        let longBreakMenuItem = NSMenuItem(title: "Long Break", action: nil, keyEquivalent: "")
+        longBreakMenuItem.submenu = longBreakMenu
+        pomodoroMenu.addItem(longBreakMenuItem)
+        
+        pomodoroMenu.addItem(NSMenuItem.separator())
+        
+        // Auto-start toggle
+        let autoStartItem = NSMenuItem(title: "Auto-start Next", action: #selector(toggleAutoStart), keyEquivalent: "")
+        autoStartItem.state = settings.autoStartNextSession ? .on : .off
+        pomodoroMenu.addItem(autoStartItem)
+        
+        let pomodoroMenuItem = NSMenuItem(title: "Pomodoro Settings", action: nil, keyEquivalent: "")
+        pomodoroMenuItem.submenu = pomodoroMenu
+        menu.addItem(pomodoroMenuItem)
+        
         // Appearance submenu
         let appearanceMenu = NSMenu()
         
@@ -183,44 +233,53 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     private func createStyledText(_ text: String, color: NSColor, compact: Bool) -> NSAttributedString {
-        let fontSize: CGFloat = compact ? 9 : 14
-        let font = NSFont.monospacedDigitSystemFont(ofSize: fontSize, weight: .medium)
+        let fontSize: CGFloat = compact ? 10 : 14
+        let font = NSFont.monospacedDigitSystemFont(ofSize: fontSize, weight: .semibold)
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         
         if compact {
-            paragraphStyle.lineSpacing = -2
-            paragraphStyle.minimumLineHeight = 10
-            paragraphStyle.maximumLineHeight = 10
+            paragraphStyle.lineSpacing = -3
+            paragraphStyle.maximumLineHeight = 12
+            paragraphStyle.minimumLineHeight = 12
         }
         
-        let attributes: [NSAttributedString.Key: Any] = [
+        var attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: color,
             .font: font,
             .paragraphStyle: paragraphStyle
         ]
         
+        if compact {
+            attributes[.baselineOffset] = -3
+        }
+        
         return NSAttributedString(string: text, attributes: attributes)
     }
     
     private func createGradientText(_ text: String, from startColor: NSColor, to endColor: NSColor, compact: Bool) -> NSAttributedString {
-        let fontSize: CGFloat = compact ? 9 : 14
-        let font = NSFont.monospacedDigitSystemFont(ofSize: fontSize, weight: .medium)
+        let fontSize: CGFloat = compact ? 10 : 14
+        let font = NSFont.monospacedDigitSystemFont(ofSize: fontSize, weight: .semibold)
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         
         if compact {
-            paragraphStyle.lineSpacing = -2
-            paragraphStyle.minimumLineHeight = 10
-            paragraphStyle.maximumLineHeight = 10
+            paragraphStyle.lineSpacing = -3
+            paragraphStyle.maximumLineHeight = 12
+            paragraphStyle.minimumLineHeight = 12
         }
         
-        let attributes: [NSAttributedString.Key: Any] = [
+        var attributes: [NSAttributedString.Key: Any] = [
             .font: font,
             .paragraphStyle: paragraphStyle
         ]
+        
+        if compact {
+            attributes[.baselineOffset] = -3
+        }
+        
         let attributedString = NSMutableAttributedString(string: text, attributes: attributes)
         
         // Create gradient colors for each character (skip newlines)
@@ -329,6 +388,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         settings.colorTheme = color
         updateDisplay(timerEngine.formattedTime())
+    }
+    
+    @objc private func setWorkDuration(_ sender: NSMenuItem) {
+        guard let minutes = sender.representedObject as? Int else { return }
+        settings.pomodoroWorkDuration = minutes
+    }
+    
+    @objc private func setShortBreak(_ sender: NSMenuItem) {
+        guard let minutes = sender.representedObject as? Int else { return }
+        settings.pomodoroShortBreak = minutes
+    }
+    
+    @objc private func setLongBreak(_ sender: NSMenuItem) {
+        guard let minutes = sender.representedObject as? Int else { return }
+        settings.pomodoroLongBreak = minutes
+    }
+    
+    @objc private func toggleAutoStart() {
+        settings.autoStartNextSession.toggle()
     }
 }
 
